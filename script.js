@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.querySelector('.container');
     
     // Criar elemento de áudio
-    const backgroundMusic = new Audio('audio/Fim_Ou_Intervalo___De_Trás_Pra_Frente___Faz_Tempo__Ao_Vivo_Em_Brasília_(128k).m4a');
+    const backgroundMusic = new Audio('./audio/Fim_Ou_Intervalo___De_Trás_Pra_Frente___Faz_Tempo__Ao_Vivo_Em_Brasília_(128k).m4a');
     backgroundMusic.loop = true; // Loop da música
     backgroundMusic.volume = 0.7; // Volume a 70%
     
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Salvar estado da música em sessionStorage
         sessionStorage.setItem('musicPlaying', 'true');
-        sessionStorage.setItem('audioPath', 'audio/Fim_Ou_Intervalo___De_Trás_Pra_Frente___Faz_Tempo__Ao_Vivo_Em_Brasília_(128k).m4a');
+        sessionStorage.setItem('audioPath', './audio/Fim_Ou_Intervalo___De_Trás_Pra_Frente___Faz_Tempo__Ao_Vivo_Em_Brasília_(128k).m4a');
         
         // Show a confetti effect
         celebrateAccept();

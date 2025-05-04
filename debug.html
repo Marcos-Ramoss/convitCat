@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - GitHub Pages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 {
+            color: #ff4b8a;
+            text-align: center;
+        }
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .warning {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        button {
+            background-color: #ff4b8a;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #e6457d;
+        }
+        #image-tests img {
+            max-width: 200px;
+            height: auto;
+            margin: 10px;
+            border: 1px solid #ddd;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Debug - GitHub Pages</h1>
+    
+    <div class="section">
+        <h2>Informações do Site</h2>
+        <p><strong>URL:</strong> <span id="current-url"></span></p>
+        <p><strong>Caminho base:</strong> <span id="base-path"></span></p>
+        <p><strong>User Agent:</strong> <span id="user-agent"></span></p>
+    </div>
+    
+    <div class="section">
+        <h2>Teste de Imagens</h2>
+        <div id="image-tests">
+            <h3>Imagem da Página Inicial:</h3>
+            <div>
+                <p>Com path relativo: <code>img/bb.jpeg</code></p>
+                <img src="img/bb.jpeg" alt="Relativo" onerror="this.after(' ❌ Falhou')">
+                
+                <p>Com ./ path: <code>./img/bb.jpeg</code></p>
+                <img src="./img/bb.jpeg" alt="Com ./" onerror="this.after(' ❌ Falhou')">
+            </div>
+            
+            <h3>Imagens da Página de Escolhas:</h3>
+            <div>
+                <p>Resident Evil (maiúsculas): <code>./img/Resident.jpg</code></p>
+                <img src="./img/Resident.jpg" alt="Resident Evil" onerror="this.after(' ❌ Falhou')">
+                
+                <p>Resident Evil (minúsculas): <code>./img/resident.jpg</code></p>
+                <img src="./img/resident.jpg" alt="Resident Evil Lowercase" onerror="this.after(' ❌ Falhou')">
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Verificação de Arquivos</h2>
+        <button id="check-files">Verificar Arquivos</button>
+        <div id="file-check-result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Soluções Recomendadas</h2>
+        <div id="recommendations">
+            <p class="warning">Após os testes acima, aqui estão algumas recomendações:</p>
+            <ol>
+                <li>Verifique se a pasta <code>img/</code> está realmente no seu repositório do GitHub. Ela deve estar no mesmo nível que seus arquivos HTML.</li>
+                <li>Verifique se os nomes dos arquivos de imagem correspondem exatamente aos nomes referenciados no HTML (GitHub Pages é sensível a maiúsculas/minúsculas).</li>
+                <li>Confira se os formatos dos arquivos estão corretos (.jpg, .jpeg, .png).</li>
+                <li>Tente usar caminhos com <code>./</code> no início para garantir que o navegador busque a partir do diretório atual.</li>
+                <li>Use a ferramenta de inspeção do navegador (F12) e verifique a guia Network/Rede para ver os erros de carregamento específicos.</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Exibir informações da página
+        document.getElementById('current-url').textContent = window.location.href;
+        document.getElementById('base-path').textContent = window.location.pathname;
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+        
+        // Verificar arquivos
+        document.getElementById('check-files').addEventListener('click', function() {
+            const result = document.getElementById('file-check-result');
+            result.innerHTML = '<p>Verificando arquivos...</p>';
+            
+            // Lista de arquivos para verificar
+            const filesToCheck = [
+                'index.html',
+                'choices.html',
+                'style.css',
+                'choices.css',
+                'script.js',
+                'choices.js',
+                'img/bb.jpeg',
+                'img/Resident.jpg',
+                'img/It Takes Two.jpg',
+                'img/The lost of Us.jpg',
+                'img/susurra.jpg',
+                'img/dracula.jpg',
+                'img/Thokyo.jpg',
+                'audio/Fim_Ou_Intervalo___De_Trás_Pra_Frente___Faz_Tempo__Ao_Vivo_Em_Brasília_(128k).m4a'
+            ];
+            
+            // Criar tabela para resultados
+            let tableHTML = '<table><tr><th>Arquivo</th><th>Status</th></tr>';
+            
+            // Verificar cada arquivo
+            let completedChecks = 0;
+            
+            filesToCheck.forEach(file => {
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        const status = xhr.status === 200 ? 
+                            '<span class="success">✅ Encontrado</span>' : 
+                            '<span class="error">❌ Não encontrado (404)</span>';
+                        
+                        tableHTML += `<tr><td>${file}</td><td>${status}</td></tr>`;
+                        
+                        completedChecks++;
+                        if (completedChecks === filesToCheck.length) {
+                            tableHTML += '</table>';
+                            result.innerHTML = tableHTML;
+                        }
+                    }
+                };
+                
+                xhr.open('HEAD', file, true);
+                xhr.send();
+            });
+        });
+    </script>
+</body>
+</html> 
