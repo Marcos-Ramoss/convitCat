@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8e1e8;
+    padding: 20px;
+}
+
+.container {
+    text-align: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.girl-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 5px solid #ff4b8a;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.question {
+    margin-bottom: 30px;
+    color: #ff4b8a;
+    font-size: 1.5rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s, background-color 0.2s;
+    margin: 5px;
+}
+
+#accept-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+#accept-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+#refuse-btn {
+    background-color: #f44336;
+    color: white;
+    position: relative;
+}
+
+.result {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4caf50;
+    margin-top: 20px;
+    height: 30px;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .girl-image {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .question {
+        font-size: 1.2rem;
+    }
+    
+    button {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .girl-image {
+        width: 120px;
+        height: 120px;
+        border-width: 3px;
+    }
+    
+    .question {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+    
+    .buttons {
+        gap: 10px;
+    }
+    
+    button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+} 
